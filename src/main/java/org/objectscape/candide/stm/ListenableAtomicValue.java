@@ -16,7 +16,6 @@
  */
 package org.objectscape.candide.stm;
 
-import org.objectscape.candide.common.CallbackInvoker;
 import org.objectscape.candide.common.SendEvent;
 import org.objectscape.candide.common.SendListener;
 import org.objectscape.candide.concurrent.ListenerValue;
@@ -36,8 +35,6 @@ public class ListenableAtomicValue<V> {
 
     protected Map<SetListener<V>, ListenerValue> setListeners = newMap();
     protected Map<SendListener<V>, ListenerValue> sendListeners = newMap();
-
-    protected CallbackInvoker invoker = new CallbackInvoker();
 
     protected ListenableAtomicValue() {
         super();
@@ -90,7 +87,8 @@ public class ListenableAtomicValue<V> {
             public void run() {
                 for(final Map.Entry<SetListener<V>, ListenerValue> entry : setListeners.entrySet()) {
                     final ListenerValue listenerValue = entry.getValue();
-                    invoker.invoke(entry.getKey(), listenerValue, new SetEvent<V>(name, previousValue, immutableValue, listenerValue.nextInvocationCount()));
+                    final SetListener<V> listener = entry.getKey();
+                    listener.accept(new SetEvent<V>(name, previousValue, immutableValue, listenerValue.nextInvocationCount()));
                 }
             }
         });
@@ -102,7 +100,8 @@ public class ListenableAtomicValue<V> {
             public void run() {
                 for(final Map.Entry<SendListener<V>, ListenerValue> entry : sendListeners.entrySet()) {
                     final ListenerValue listenerValue = entry.getValue();
-                    invoker.invoke(entry.getKey(), listenerValue, new SendEvent<V>(name, immutableValue, listenerValue.nextInvocationCount()));
+                    final SendListener<V> listener = entry.getKey();
+                    listener.accept(new SendEvent<V>(name, immutableValue, listenerValue.nextInvocationCount()));
                 }
             }
         });

@@ -17,7 +17,6 @@
 
 package org.objectscape.candide.stm;
 
-import org.objectscape.candide.common.CallbackInvoker;
 import org.objectscape.candide.concurrent.ListenerValue;
 import org.objectscape.candide.util.CallerMustSynchronize;
 
@@ -43,8 +42,6 @@ public class ListenableAtomicMap<K, V> implements Map<K, V> {
     private Map<K, Map<PutListener<V>, ListenerValue>> putListeners = newMap();
     private Map<K, Map<RemoveListener<V>, ListenerValue>> removeListeners = newMap();
     private Map<K, Map<SendListener<V>, ListenerValue>> sendListeners = newMap();
-
-    private CallbackInvoker invoker = new CallbackInvoker();
 
     public ListenableAtomicMap() {
     }
@@ -179,7 +176,8 @@ public class ListenableAtomicMap<K, V> implements Map<K, V> {
 
         for(final Entry<RemoveListener<V>, ListenerValue> entry : listeners.entrySet()) {
             final ListenerValue listenerValue = entry.getValue();
-            invoker.invoke(entry.getKey(), listenerValue, new RemoveEvent<V>(mapName, key, value, listenerValue.nextInvocationCount()));
+            final RemoveListener<V> listener = entry.getKey();
+            listener.accept(new RemoveEvent<V>(mapName, key, value, listenerValue.nextInvocationCount()));
         }
     }
 
@@ -192,7 +190,8 @@ public class ListenableAtomicMap<K, V> implements Map<K, V> {
 
         for(final Entry<SendListener<V>, ListenerValue> entry : listeners.entrySet()) {
             final ListenerValue listenerValue = entry.getValue();
-            invoker.invoke(entry.getKey(), listenerValue, new SendEvent<V>(mapName, key, value, listenerValue.nextInvocationCount()));
+            final SendListener<V> listener = entry.getKey();
+            listener.accept(new SendEvent<V>(mapName, key, value, listenerValue.nextInvocationCount()));
         }
     }
 
@@ -205,7 +204,8 @@ public class ListenableAtomicMap<K, V> implements Map<K, V> {
 
         for(final Entry<PutListener<V>, ListenerValue> entry : listeners.entrySet()) {
             final ListenerValue listenerValue = entry.getValue();
-            invoker.invoke(entry.getKey(), listenerValue, new PutEvent<V>(mapName, key, value, listenerValue.nextInvocationCount()));
+            final PutListener<V> listener = entry.getKey();
+            listener.accept(new PutEvent<V>(mapName, key, value, listenerValue.nextInvocationCount()));
         }
     }
 
