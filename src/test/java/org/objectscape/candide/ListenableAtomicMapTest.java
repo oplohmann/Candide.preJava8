@@ -19,8 +19,8 @@ package org.objectscape.candide;
 import org.junit.Assert;
 import org.junit.Test;
 import org.objectscape.candide.stm.*;
-import org.objectscape.candide.util.BooleanValue;
-import org.objectscape.candide.util.IntValue;
+import org.objectscape.candide.util.values.BooleanValue;
+import org.objectscape.candide.util.values.IntValue;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

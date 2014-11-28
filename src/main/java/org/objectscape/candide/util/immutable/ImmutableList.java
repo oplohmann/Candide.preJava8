@@ -1,9 +1,8 @@
-package org.objectscape.candide.util;
+package org.objectscape.candide.util.immutable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created with IntelliJ IDEA.

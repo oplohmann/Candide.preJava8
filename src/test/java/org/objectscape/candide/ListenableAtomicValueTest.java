@@ -24,8 +24,8 @@ import org.objectscape.candide.concurrent.SetEvent;
 import org.objectscape.candide.concurrent.SetListener;
 import org.objectscape.candide.stm.ListenableAtomicIntegerValue;
 import org.objectscape.candide.stm.ListenableAtomicValue;
-import org.objectscape.candide.util.BooleanValue;
 import org.objectscape.candide.util.function.Function;
+import org.objectscape.candide.util.values.BooleanValue;
 
 import java.util.concurrent.CountDownLatch;
 
