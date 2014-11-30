@@ -36,30 +36,50 @@ import static org.objectscape.candide.util.scalastm.AtomicUtils.atomic;
 import static org.objectscape.candide.util.scalastm.AtomicUtils.newMap;
 
 /**
+ * Result of running <code>putConcurrentMap</code>
+ *
+ * time for 2 threads concurrent: 1947 ms
+ * time for 4 threads concurrent: 3655 ms
+ * time for 6 threads concurrent: 6301 ms
+ * time for 8 threads concurrent: 5959 ms
+ * time for 10 threads concurrent: 9041 ms
+ * time for 12 threads concurrent: 8969 ms
+ * time for 14 threads concurrent: 11864 ms
+ * time for 16 threads concurrent: 12127 ms
+ *
  * Result of running <code>putConcurrentListenableMap</code>:
  *
- * time for 2 threads: 20098 ms
- * time for 4 threads: 25256 ms
- * time for 6 threads: 24958 ms
- * time for 8 threads: 25239 ms
- * time for 10 threads: 25004 ms
- * time for 12 threads: 24813 ms
- * time for 14 threads: 24844 ms
- * time for 16 threads: 24785 ms
+ * time for 2 threads concurrent: 8642 ms
+ * time for 4 threads concurrent: 15254 ms
+ * time for 6 threads concurrent: 22461 ms
+ * time for 8 threads concurrent: 30004 ms
+ * time for 10 threads concurrent: 37884 ms
+ * time for 12 threads concurrent: 45310 ms
+ * time for 14 threads concurrent: 52849 ms
+ * time for 16 threads concurrent: 60464 ms
+ *
+ * Result of running <code>putAtomicMap</code>:
+ *
+ * time for 2 threads scalastm: 4382 ms
+ * time for 4 threads scalastm: 8514 ms
+ * time for 6 threads scalastm: 12216 ms
+ * time for 8 threads scalastm: 15919 ms
+ * time for 10 threads scalastm: 19951 ms
+ * time for 12 threads scalastm: 23773 ms
+ * time for 14 threads scalastm: 27640 ms
+ * time for 16 threads scalastm: 31873 ms
  *
  * Result of running <code>putListenableAtomicMap</code>:
  *
- * time for 2 threads scalastm: 5031
- * time for 4 threads scalastm: 5333
- * time for 6 threads scalastm: 5836
- * time for 8 threads scalastm: 6053
- * time for 10 threads scalastm: 7067
- * time for 12 threads scalastm: 8379
- * time for 14 threads scalastm: 9706
- * time for 16 threads scalastm: 8043
+ * time for 2 threads scalastm: 6883 ms
+ * time for 4 threads scalastm: 13158 ms
+ * time for 6 threads scalastm: 21214 ms
+ * time for 8 threads scalastm: 25690 ms
+ * time for 10 threads scalastm: 31089 ms
+ * time for 12 threads scalastm: 37744 ms
+ * time for 14 threads scalastm: 43957 ms
+ * time for 16 threads scalastm: 51935 ms
  *
- * So the solution using ScalaSTM scalastm blocks beats the solution using ReentrantReadWriteLock
- * by a factor between 2,5 and 4,7. Both solutions seem to scale well.
  */
 
 @Ignore // not part of regression tests - for performance comparison only
